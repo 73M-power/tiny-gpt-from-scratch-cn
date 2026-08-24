@@ -20,6 +20,9 @@
 | key / K | 每个位置用于和查询匹配的“索引”向量 |
 | value / V | 匹配后真正被加权汇总的内容向量 |
 | attention score | Q 与 K 点积得到的匹配分数，softmax 前还不是概率 |
+| multi-head attention | 在多个特征子空间中并行计算注意力；每个 Head 都读取完整序列 |
+| output projection | 合并 Head 后，用可学习线性层重新混合各 Head 的信息 |
+| dropout | 训练时随机置零部分连接或特征的正则化方法，推理时关闭 |
 
 ## Shape 字母
 
@@ -40,6 +43,8 @@
 | token embedding | `(B,T,C)` 或 BSH |
 | Q/K/V 多头表示 | `(B,N,T,D)` 或 BNSD |
 | 注意力分数 | `(B,N,T,T)` 或 BNSS |
+| 各 Head 加权输出 | `(B,N,T,D)` |
+| 合并 Head 后 | `(B,T,C)` 或 BSH |
 | logits | `(B,T,V)` |
 
 看到不同字母时，优先检查代码或文档如何定义，不要假设所有项目都遵守同一命名。
