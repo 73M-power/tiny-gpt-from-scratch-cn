@@ -22,8 +22,8 @@
 | 课程 | 主题 | 状态 |
 | --- | --- | --- |
 | [第 1 课](lessons/01-tokenizer-and-batches.md) | Tokenizer、`self`、训练样本、`torch.stack`、`make_batch` | 已完成 |
-| 第 2 课 | Embedding、位置编码、BTC/BSH/BNSD | 下一课 |
-| 第 3 课 | Q、K、V 与因果 Self-Attention | 待学习 |
+| [第 2 课](lessons/02-embeddings-and-shapes.md) | Embedding、位置编码、BTC/BSH/BNSD | 已完成 |
+| 第 3 课 | Q、K、V 与因果 Self-Attention | 下一课 |
 | 第 4 课 | 多头注意力、合并 Head 与输出投影 | 待学习 |
 | 第 5 课 | Transformer Block、残差连接、LayerNorm、FFN | 待学习 |
 | 第 6 课 | Logits、Softmax 与交叉熵 | 待学习 |
@@ -63,5 +63,8 @@
 - `self` 为什么表示当前 Python 对象。
 - 如何从长语料随机抽取 `(B,T)` 训练 batch。
 - 输入和目标为什么错开一个 token。
+- `(B,T)` 如何经 embedding 变成 `(B,T,C)`。
+- BTC、BSH 与 BNSD 只是不同的维度命名约定。
+- 隐藏维度满足 `C=N×D`，并能在 BSH 与 BNSD 之间转换。
 
-下一步是理解 `(B,T)` 如何经 embedding 变成 `(B,T,C)`，以及 token 信息为什么还需要加上位置信息。
+下一步是从 `(B,T,C)` 生成 Q、K、V，并理解一个 token 如何选择应该读取的上下文信息。
