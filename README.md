@@ -74,3 +74,7 @@ python -m pip install -r requirements.txt
 小语料很容易过拟合，生成质量有限，这是预期现象。这个项目用来理解机制；后续会在此基础上进入标准 tokenizer、预训练模型和 LoRA 微调。
 
 `--device auto` 会优先使用 Apple MPS，不可用时自动退回 CPU。当前默认小模型在 CPU 上也能很快完成训练。
+
+## 开源许可证
+
+本项目采用 [MIT License](LICENSE)。
