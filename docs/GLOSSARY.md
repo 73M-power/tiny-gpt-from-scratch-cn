@@ -16,6 +16,10 @@
 | parameter | 通过训练更新的模型内部数值 |
 | gradient | loss 对参数的导数，指示参数变化如何影响 loss |
 | logits | softmax 之前、针对每个候选 token 的原始分数 |
+| softmax | 沿候选类别维把 logits 转换成总和为 1 的概率分布 |
+| target | 正确 token 的整数词表索引；单个位置是一个 ID，整批 targets 的 shape 为 `(B,T)` |
+| cross-entropy loss | 正确 token 概率的负对数；项目默认再对 `B×T` 个位置取平均 |
+| weight tying | 让 token embedding 与 `lm_head` 共享同一个 `(V,C)` 参数矩阵 |
 | query / Q | 当前位置为了读取上下文而生成的“查询”向量 |
 | key / K | 每个位置用于和查询匹配的“索引”向量 |
 | value / V | 匹配后真正被加权汇总的内容向量 |
@@ -54,5 +58,9 @@
 | 各 Head 加权输出 | `(B,N,T,D)` |
 | 合并 Head 后 | `(B,T,C)` 或 BSH |
 | logits | `(B,T,V)` |
+| softmax probabilities | `(B,T,V)` |
+| targets | `(B,T)` |
+| 展平后的 logits / targets | `(B×T,V)` / `(B×T)` |
+| cross-entropy loss | 标量 `()` |
 
 看到不同字母时，优先检查代码或文档如何定义，不要假设所有项目都遵守同一命名。
