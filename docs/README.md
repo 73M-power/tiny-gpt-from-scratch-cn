@@ -25,8 +25,8 @@
 | [第 2 课](lessons/02-embeddings-and-shapes.md) | Embedding、位置编码、BTC/BSH/BNSD | 已完成 |
 | [第 3 课](lessons/03-qkv-and-self-attention.md) | Q、K、V 与因果 Self-Attention | 已完成 |
 | [第 4 课](lessons/04-multi-head-attention.md) | 多头注意力、合并 Head 与输出投影 | 已完成 |
-| 第 5 课 | Transformer Block、残差连接、LayerNorm、FFN | 下一课 |
-| 第 6 课 | Logits、Softmax 与交叉熵 | 待学习 |
+| [第 5 课](lessons/05-transformer-block.md) | Transformer Block、残差连接、LayerNorm、FFN | 已完成 |
+| 第 6 课 | Logits、Softmax 与交叉熵 | 下一课 |
 | 第 7 课 | 梯度、反向传播与 AdamW | 待学习 |
 | 第 8 课 | 训练循环、验证集与过拟合 | 待学习 |
 | 第 9 课 | 自回归生成、temperature 与 top-k | 待学习 |
@@ -67,4 +67,4 @@
 - BTC、BSH 与 BNSD 只是不同的维度命名约定。
 - 隐藏维度满足 `C=N×D`，并能在 BSH 与 BNSD 之间转换。
 
-已经理解所有 Head 都读取完整序列、分别使用 D 维特征子空间，并通过拼接和输出投影恢复 `(B,T,C)`。
+已经理解 Attention、FFN、LayerNorm 和残差连接如何组成保持 `(B,T,C)` 不变的 Transformer Block，并能区分隐藏状态、Attention weights、模型参数与 logits。
