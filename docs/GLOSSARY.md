@@ -11,6 +11,18 @@
 | decode | 把 token ID 转换回文字 |
 | embedding | 把离散 ID 映射为可学习连续向量 |
 | batch | 一次并行计算的一组训练样本 |
+| training step | 使用一个 batch 完成一次 forward、backward 和参数更新 |
+| epoch | 通常指完整遍历训练集一次；随机有放回窗口采样时没有严格 epoch 边界 |
+| training set | 用于计算梯度并更新模型参数的数据 |
+| validation set | 不参与参数更新，用于训练期间评估、选择模型和调整超参数的数据 |
+| test set | 模型与超参数确定后，用于最终独立报告的数据 |
+| generalization | 模型把学到的规律迁移到未参与训练的数据上的能力 |
+| overfitting | 训练表现继续改善，但验证表现停滞或变差的现象 |
+| data leakage | 验证或测试信息不当进入训练过程，使评估结果失真的问题 |
+| eval_interval | 相隔多少个训练 step 执行一次评估 |
+| eval_iters | 一次评估平均多少个随机 batch；影响估计稳定性和评估成本，不影响更新步幅 |
+| checkpoint | 某个训练 step 保存到磁盘的状态快照，可包含模型参数、optimizer 状态、配置等 |
+| early stopping | 验证指标长期不再改善时停止训练，避免继续过拟合 |
 | context window | 模型一次最多读取的 token 数量 |
 | next-token prediction | 根据左侧上下文预测下一个 token |
 | parameter | 通过训练更新的模型内部数值 |
@@ -34,7 +46,7 @@
 | attention score | Q 与 K 点积得到的匹配分数，softmax 前还不是概率 |
 | multi-head attention | 在多个特征子空间中并行计算注意力；每个 Head 都读取完整序列 |
 | output projection | 合并 Head 后，用可学习线性层重新混合各 Head 的信息 |
-| dropout | 训练时随机置零部分连接或特征的正则化方法，推理时关闭 |
+| dropout | 训练 forward 时随机置零部分中间激活或注意力连接的正则化方法；不删除参数，评估与推理时关闭 |
 | hidden state | 当前输入在模型各层之间传递的临时连续表示，本项目常见 shape 为 `(B,T,C)` |
 | Transformer Block | 由 Attention、FFN、LayerNorm 和残差连接组成的基本层；多个 Block 按顺序堆叠 |
 | LayerNorm | 对每个 token 的最后 C 维计算均值和方差并重新缩放，不等同于 Linear，也不保证正态分布 |

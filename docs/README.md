@@ -28,8 +28,8 @@
 | [第 5 课](lessons/05-transformer-block.md) | Transformer Block、残差连接、LayerNorm、FFN | 已完成 |
 | [第 6 课](lessons/06-logits-softmax-cross-entropy.md) | Logits、Softmax 与交叉熵 | 已完成 |
 | [第 7 课](lessons/07-gradients-backprop-adamw.md) | 梯度、反向传播与 AdamW | 已完成 |
-| 第 8 课 | 训练循环、验证集与过拟合 | 下一课 |
-| 第 9 课 | 自回归生成、temperature 与 top-k | 待学习 |
+| [第 8 课](lessons/08-training-validation-overfitting.md) | 训练循环、验证集与过拟合 | 已完成 |
+| 第 9 课 | 自回归生成、temperature 与 top-k | 下一课 |
 | 第 10 课 | Checkpoint、加载与继续训练 | 待学习 |
 | 第 11 课 | 从 Tiny GPT 对照现代 LLM | 待学习 |
 | 第 12 课 | 子词 tokenizer、预训练模型与 LoRA | 待学习 |
@@ -67,4 +67,4 @@
 - BTC、BSH 与 BNSD 只是不同的维度命名约定。
 - 隐藏维度满足 `C=N×D`，并能在 BSH 与 BNSD 之间转换。
 
-已经理解梯度如何从 loss 反向传播，以及 `zero_grad`、梯度裁剪和 AdamW 如何共同完成一次参数更新；能够区分计算梯度与修改参数。
+已经理解训练集、验证集和测试集的分工，能够通过 train/val loss 曲线识别过拟合，并能区分 Dropout、评估采样与 checkpoint。
