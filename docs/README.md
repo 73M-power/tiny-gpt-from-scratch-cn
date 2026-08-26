@@ -29,7 +29,7 @@
 | [第 6 课](lessons/06-logits-softmax-cross-entropy.md) | Logits、Softmax 与交叉熵 | 已完成 |
 | [第 7 课](lessons/07-gradients-backprop-adamw.md) | 梯度、反向传播与 AdamW | 已完成 |
 | [第 8 课](lessons/08-training-validation-overfitting.md) | 训练循环、验证集与过拟合 | 已完成 |
-| 第 9 课 | 自回归生成、temperature 与 top-k | 下一课 |
+| [第 9 课](lessons/09-autoregressive-generation.md) | 自回归生成、temperature 与 top-k | 已完成 |
 | 第 10 课 | Checkpoint、加载与继续训练 | 待学习 |
 | 第 11 课 | 从 Tiny GPT 对照现代 LLM | 待学习 |
 | 第 12 课 | 子词 tokenizer、预训练模型与 LoRA | 待学习 |
@@ -66,5 +66,10 @@
 - `(B,T)` 如何经 embedding 变成 `(B,T,C)`。
 - BTC、BSH 与 BNSD 只是不同的维度命名约定。
 - 隐藏维度满足 `C=N×D`，并能在 BSH 与 BNSD 之间转换。
+- `(B,T,V)` 包含 `B×T` 份 next-token prediction，每份预测有 `V` 个候选分数。
+- 生成时只取最后位置 logits，并能区分整数索引 `-1` 与切片 `-1:` 对 shape 的影响。
+- temperature 调整概率差距，top-k 限制候选池，multinomial 根据概率抽取 token ID。
+- prompt、`max_new_tokens`、context window 与最终输出长度之间的关系。
+- 为什么当前实现逐 token 自回归生成，并且尚未使用 KV Cache 和 EOS 提前停止。
 
-已经理解训练集、验证集和测试集的分工，能够通过 train/val loss 曲线识别过拟合，并能区分 Dropout、评估采样与 checkpoint。
+下一课将学习 checkpoint 中保存了什么、如何加载模型，以及如何从已有状态继续训练。

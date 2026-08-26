@@ -23,7 +23,20 @@
 | eval_iters | 一次评估平均多少个随机 batch；影响估计稳定性和评估成本，不影响更新步幅 |
 | checkpoint | 某个训练 step 保存到磁盘的状态快照，可包含模型参数、optimizer 状态、配置等 |
 | early stopping | 验证指标长期不再改善时停止训练，避免继续过拟合 |
-| context window | 模型一次最多读取的 token 数量 |
+| prompt | 交给模型作为生成起点的输入 token 序列 |
+| autoregressive generation | 每轮预测一个新 token，把它拼回输入，再用扩展后的序列继续预测 |
+| decoding / generation strategy | 从 logits 或概率分布选择下一个 token 的规则，例如 greedy、temperature、top-k 或 top-p |
+| max_new_tokens | 最多新增的 token 数；不是包含 prompt 的最终总长度 |
+| context window | 模型一次最多读取的 token 数量；生成结果可更长，但下一轮只能直接使用窗口内的最近 token |
+| temperature | 生成时用 logits 除以正温度值来调节概率差距；较低时更集中，较高时更平坦 |
+| top-k sampling | 只保留 logits 最高的 k 个候选，其余设为负无穷后再采样 |
+| top-p / nucleus sampling | 保留累计概率达到阈值 p 的最小候选集合，候选数量会随分布改变 |
+| sampling | 按概率随机抽取 token，因此同一概率分布可能得到不同结果 |
+| multinomial | PyTorch 按每行概率采样类别索引的操作；输入 `(B,V)`、每行采 1 个时输出 `(B,1)` |
+| greedy decoding | 每轮使用 argmax 选择最高分 token；通常稳定但更容易重复 |
+| argmax | 返回最大值所在的索引；与随机采样不同，相同输入下选择确定 |
+| EOS | end-of-sequence，序列结束 token；生成到它时可以提前停止，当前项目未定义 |
+| KV Cache | 缓存已处理 token 的 Attention Key/Value，避免生成每个新 token 时重复计算全部旧位置；当前项目未实现 |
 | next-token prediction | 根据左侧上下文预测下一个 token |
 | parameter | 通过训练更新的模型内部数值 |
 | gradient | loss 对参数的局部导数，指示当前点参数变化如何影响 loss；通常与对应参数 shape 相同 |
@@ -79,6 +92,10 @@
 | 合并 Head 后 | `(B,T,C)` 或 BSH |
 | logits | `(B,T,V)` |
 | softmax probabilities | `(B,T,V)` |
+| 训练 logits 中的预测任务数 | `B×T`，每份预测包含 `V` 个分数 |
+| 生成时最后位置 logits / probabilities | `(B,V)` |
+| 每轮采样得到的 next token IDs | `(B,1)` |
+| 生成完成后的 token IDs | `(B,T₀+max_new_tokens)` |
 | targets | `(B,T)` |
 | 展平后的 logits / targets | `(B×T,V)` / `(B×T)` |
 | cross-entropy loss | 标量 `()` |
