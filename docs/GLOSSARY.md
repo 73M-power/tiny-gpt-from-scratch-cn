@@ -14,7 +14,15 @@
 | context window | 模型一次最多读取的 token 数量 |
 | next-token prediction | 根据左侧上下文预测下一个 token |
 | parameter | 通过训练更新的模型内部数值 |
-| gradient | loss 对参数的导数，指示参数变化如何影响 loss |
+| gradient | loss 对参数的局部导数，指示当前点参数变化如何影响 loss；通常与对应参数 shape 相同 |
+| learning rate / lr | 控制每次参数更新基础步幅的超参数 |
+| backpropagation / backward | 从标量 loss 反向应用链式法则，把梯度累积到各参数 `.grad` 的过程 |
+| autograd | PyTorch 自动记录张量运算并计算梯度的系统 |
+| optimizer | 读取参数梯度并按照更新规则修改模型参数、维护优化器状态的对象 |
+| zero_grad | 清理 optimizer 管理的参数梯度，不会清零模型参数 |
+| gradient clipping | 梯度范数过大时按比例缩小梯度，降低单次更新失控的风险 |
+| AdamW | 使用梯度一阶、二阶移动平均并采用解耦 weight decay 的优化器 |
+| optimizer state | AdamW 为参数维护的 m/v 等跨 step 状态，不属于 forward 隐藏状态 |
 | logits | softmax 之前、针对每个候选 token 的原始分数 |
 | softmax | 沿候选类别维把 logits 转换成总和为 1 的概率分布 |
 | target | 正确 token 的整数词表索引；单个位置是一个 ID，整批 targets 的 shape 为 `(B,T)` |
@@ -62,5 +70,7 @@
 | targets | `(B,T)` |
 | 展平后的 logits / targets | `(B×T,V)` / `(B×T)` |
 | cross-entropy loss | 标量 `()` |
+| 模型参数 / 参数梯度 | shape 相同，例如 `(V,C)` / `(V,C)` |
+| AdamW 的 m/v 状态 | 通常与对应参数 shape 相同 |
 
 看到不同字母时，优先检查代码或文档如何定义，不要假设所有项目都遵守同一命名。
