@@ -22,6 +22,15 @@
 | eval_interval | 相隔多少个训练 step 执行一次评估 |
 | eval_iters | 一次评估平均多少个随机 batch；影响估计稳定性和评估成本，不影响更新步幅 |
 | checkpoint | 某个训练 step 保存到磁盘的状态快照，可包含模型参数、optimizer 状态、配置等 |
+| state_dict | PyTorch 用名称映射到 Tensor 的状态字典；模型的 `state_dict` 保存参数和持久化 Buffer，不包含 `forward()` 代码 |
+| buffer | 属于模型状态但不由 optimizer 学习的 Tensor，例如固定的 `causal_mask`；可随模型移动设备并进入 `state_dict` |
+| warm start | 加载已有模型权重，但重新创建 optimizer 等训练状态后开始新的训练轨迹 |
+| resume | 从 checkpoint 恢复模型、optimizer、累计 step 和 RNG 等状态，继续原训练过程 |
+| RNG state | 随机数生成器当前所在位置的完整状态；恢复它比仅重新设置初始 seed 更适合续训 |
+| seed | 随机序列的起始种子；重新设置 seed 会回到序列起点，而恢复 RNG state 会回到保存时的位置 |
+| map_location | `torch.load` 指定 Tensor 初始加载位置的参数；设为 CPU 不限制模型之后移动到其他设备 |
+| weights_only | `torch.load` 的受限反序列化模式，只允许权重 checkpoint 常见数据类型以降低风险，但不保证陌生文件绝对安全 |
+| strict loading | `load_state_dict` 默认的严格匹配方式，会报告 missing key、unexpected key 和 size mismatch |
 | early stopping | 验证指标长期不再改善时停止训练，避免继续过拟合 |
 | prompt | 交给模型作为生成起点的输入 token 序列 |
 | autoregressive generation | 每轮预测一个新 token，把它拼回输入，再用扩展后的序列继续预测 |

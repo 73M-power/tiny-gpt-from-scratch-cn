@@ -11,7 +11,7 @@
 ## 文件地图
 
 - `tinygpt.py`：tokenizer、因果自注意力、Transformer block、GPT 和生成算法
-- `train.py`：数据切分、batch、损失评估、反向传播、优化器与保存
+- `train.py`：数据切分、batch、损失评估、反向传播、优化器、checkpoint 与断点续训
 - `generate.py`：加载 checkpoint 并逐 token 生成
 - `inspect_forward.py`：显示一次前向传播的张量形状与注意力矩阵
 - `test_tinygpt.py`：tokenizer、形状、因果遮罩与生成的最小单元测试
@@ -53,6 +53,21 @@ python -m pip install -r requirements.txt
 ```bash
 .venv/bin/python train.py
 ```
+
+先保存一个新版完整训练 checkpoint，再恢复并新增 20 个训练 step：
+
+```bash
+.venv/bin/python train.py \
+  --steps 30 \
+  --output checkpoints/demo-step-30.pt
+
+.venv/bin/python train.py \
+  --resume checkpoints/demo-step-30.pt \
+  --steps 20 \
+  --output checkpoints/demo-step-50.pt
+```
+
+`--steps` 在恢复模式下表示本次新增步数；新 checkpoint 会累计原有 `training_steps`。`--output` 必须与 `--resume` 使用不同路径，避免覆盖唯一恢复点。旧版缺少 optimizer/RNG 的推理兼容 checkpoint 仍能生成，但不能完整恢复训练。
 
 加载模型并生成：
 

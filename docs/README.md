@@ -30,7 +30,7 @@
 | [第 7 课](lessons/07-gradients-backprop-adamw.md) | 梯度、反向传播与 AdamW | 已完成 |
 | [第 8 课](lessons/08-training-validation-overfitting.md) | 训练循环、验证集与过拟合 | 已完成 |
 | [第 9 课](lessons/09-autoregressive-generation.md) | 自回归生成、temperature 与 top-k | 已完成 |
-| 第 10 课 | Checkpoint、加载与继续训练 | 待学习 |
+| [第 10 课](lessons/10-checkpoint-loading-and-resume.md) | Checkpoint、加载与继续训练 | 已完成 |
 | 第 11 课 | 从 Tiny GPT 对照现代 LLM | 待学习 |
 | 第 12 课 | 子词 tokenizer、预训练模型与 LoRA | 待学习 |
 
@@ -72,4 +72,11 @@
 - prompt、`max_new_tokens`、context window 与最终输出长度之间的关系。
 - 为什么当前实现逐 token 自回归生成，并且尚未使用 KV Cache 和 EOS 提前停止。
 
-下一课将学习 checkpoint 中保存了什么、如何加载模型，以及如何从已有状态继续训练。
+- checkpoint、`state_dict`、Parameter 与 Buffer 分别表示什么。
+- 推理加载、warm start 与完整 resume 的区别。
+- 为什么完整恢复需要模型、AdamW、累计 step、tokenizer/config 和 RNG 状态。
+- 验证过程如何临时使用并恢复 RNG，避免改变后续训练 batch。
+- `map_location="cpu"`、`weights_only=True` 和严格权重匹配分别解决什么问题。
+- missing key、unexpected key、size mismatch 和 optimizer 设备不匹配的区别。
+
+下一课将把这个 Tiny GPT 的结构逐项映射到现代 LLM。
